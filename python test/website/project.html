@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="project-container">
+        <div class="project-image">
+            <img id="project-image" src="" alt="Project Image">
+        </div>
+        <div class="project-info">
+            <h1 id="project-title"></h1>
+            <p id="project-description"></p>
+            <a href="index.html" class="back-button">← X</a>
+        </div>
+    </div>
+
+    <script>
+        // Get project name from URL
+        const params = new URLSearchParams(window.location.search);
+        const project = params.get("project");
+
+        // Project details
+        const projects = {
+            "project1": {
+                title: "Project 1: Portfolio Website",
+                image: "IMG_0030.PNG",
+                description: "This is the project I tried cell shading/rendering."
+            },
+            "project2": {
+                title: "Project 2: Older Artwork",
+                image: "IMG_3538.PNG",
+                description: "This is one of my older artworks."
+            },
+            "project3": {
+                title: "Project 3",
+                image: "IMG_0030.PNG",
+                description: "Short description of your project."
+            }
+        };
+
+        // Apply project details
+        if (projects[project]) {
+            document.getElementById("project-title").textContent = projects[project].title;
+            document.getElementById("project-image").src = projects[project].image;
+            document.getElementById("project-description").textContent = projects[project].description;
+        } else {
+            document.querySelector(".project-container").innerHTML = "<h1>Project Not Found</h1><a href='index.html'>←X</a>";
+        }
+    </script>
+</body>

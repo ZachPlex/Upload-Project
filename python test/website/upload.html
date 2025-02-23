@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files to Firebase</title>
+</head>
+<body>
+    <h1>Upload Your Project</h1>
+    
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+    <p id="status"></p>
+
+    <script type="module">
+        // Import Firebase Modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-storage.js";
+
+        // Your corrected Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBsmBK6Ytoi5fy_y2EGx3kCyUt0E64CPKY",
+            authDomain: "project-upload-2718c.firebaseapp.com",
+            projectId: "project-upload-2718c",
+            storageBucket: "project-upload-2718c.appspot.com",
+            messagingSenderId: "744254761727",
+            appId: "1:744254761727:web:8c59f9f5494c9ee52cfaca",
+            measurementId: "G-JW96QL6FGK"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+
+        async function uploadFile() {
+            const file = document.getElementById("fileInput").files[0];
+            if (!file) {
+                alert("Please select a file!");
+                return;
+            }
+
+            const storageRef = ref(storage, "uploads/" + file.name);
+            await uploadBytes(storageRef, file);
+            const fileURL = await getDownloadURL(storageRef);
+
+            document.getElementById("status").innerHTML = `Uploaded! <a href="${fileURL}" target="_blank">View File</a>`;
+        }
+    </script>
+</body>
+</html>
